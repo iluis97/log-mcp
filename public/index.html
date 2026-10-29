@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>log-mcp 配置</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>log-mcp 配置</h1>
+    <code id="config-path" class="path">加载中…</code>
+  </div>
+  <div class="topbar-actions">
+    <span id="dirty" class="pill warn" hidden>未保存</span>
+    <span id="remote-change" class="pill info" hidden>配置文件已被外部修改</span>
+    <button id="btn-reload" class="ghost" title="丢弃当前修改，重新读取配置文件">重新加载</button>
+    <button id="btn-save" class="primary">保存</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="环境标签"></nav>
+
+<main>
+  <section class="card">
+    <header class="card-head">
+      <h2>日志源</h2>
+      <span class="hint">一个标签一个源</span>
+    </header>
+    <p class="hint">标签指向一处日志原始位置：本地目录（file）、远端日志文件（ssh）、或远端容器 stdout（docker）。每个标签对应一套环境，全部同时有效。</p>
+    <div id="sources" class="sources"></div>
+  </section>
+
+  <section class="card">
+    <header class="card-head">
+      <h2>服务 <span class="count" id="service-count"></span></h2>
+      <button class="ghost" id="btn-add-service">+ 新增服务</button>
+    </header>
+    <p class="hint">服务名是模型调用时用的参数（<code>service=...</code>），指向同一个源下的一个容器或一类日志文件；一个标签可以有多个服务。</p>
+    <div class="table-wrap">
+      <table class="services" id="services">
+        <thead>
+          <tr></tr>
+        </thead>
+        <tbody id="service-rows"></tbody>
+      </table>
+    </div>
+    <p class="hint" id="service-empty" hidden>还没有服务：点右上角「+ 新增服务」，或在上方源卡片里「探测」一键导入容器。</p>
+  </section>
+
+  <section class="card" id="probe-card" hidden>
+    <header class="card-head">
+      <h2>探测结果</h2>
+      <button class="ghost" id="btn-close-probe">关闭</button>
+    </header>
+    <div id="probe-body"></div>
+  </section>
+
+  <section class="card" id="issues-card" hidden>
+    <header class="card-head">
+      <h2>校验</h2>
+    </header>
+    <ul id="issues" class="issues"></ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <button id="btn-delete-env" class="danger">删除当前标签</button>
+  <span class="hint">所有标签同时有效，互不影响；MCP 每次查日志时会先确定用哪个标签（<code>env=...</code>），不会自己挑。</span>
+  <span id="status" class="status" role="status"></span>
+  <span id="build" class="build"></span>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

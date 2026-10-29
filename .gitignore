@@ -1,0 +1,63 @@
+######################################################################
+# Build Tools
+
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+######################################################################
+# IDE
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### JRebel ###
+rebel.xml
+### NetBeans ###
+nbproject/private/
+build/*
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+######################################################################
+# Others
+*.xml.versionsBackup
+*.swp
+
+!*/build/*.java
+!*/build/*.html
+!*/build/*.xml
+
+# Log file
+*.log
+**/logs/
+
+.vscode/
+
+docs/adr/
+
+
+# 本机真实配置, 不要提交
+logmcp.config.json
+logmcp.config.json.bak
+logmcp.config.json.bak*
+# 测试生成的样例日志
+test/tmp/
+node_modules/
+.logmcp-cache.json

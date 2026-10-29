@@ -1,0 +1,26 @@
+{
+  "timezone": "Asia/Shanghai",
+  "defaults": {
+    "maxLines": 200,
+    "tokenBudget": 4000,
+    "tailBytes": 67108864,
+    "files": 8,
+    "stackLines": 8,
+    "last": "2h",
+    "timeoutMs": 15000
+  },
+  "services": {
+    "order": { "source": "local-dev", "glob": "order/logs/app*.log*" }
+  },
+  "sources": [
+    {
+      "name": "local-dev",
+      "type": "file",
+      "roots": ["test/tmp/apps"],
+      "glob": "**/*.log*",
+      "allowPaths": ["**"]
+    }
+  ],
+  "noisePatterns": ["(?i)heartbeat ok"],
+  "redact": { "enabled": true }
+}

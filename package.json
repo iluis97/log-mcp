@@ -1,0 +1,20 @@
+{
+  "name": "log-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "只读日志排查 MCP（Spring Boot 文本日志，本地文件 + SSH 远端）",
+  "type": "module",
+  "bin": {
+    "logmcp": "bin/logmcp.mjs"
+  },
+  "scripts": {
+    "start": "node bin/logmcp-start.mjs",
+    "start:mcp": "node bin/logmcp.mjs",
+    "start:web": "node bin/logmcp-web.mjs",
+    "web": "node bin/logmcp-web.mjs",
+    "test": "node test/run.mjs"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}

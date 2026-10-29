@@ -1,0 +1,74 @@
+{
+  "timezone": "Asia/Shanghai",
+  "activeEnv": "dev-123",
+  "defaults": {
+    "maxLines": 200,
+    "tokenBudget": 4000,
+    "tailBytes": 67108864,
+    "files": 8,
+    "stackLines": 12,
+    "last": "15m",
+    "timeoutMs": 25000
+  },
+  "envs": {
+    "dev-123": {
+      "source": {
+        "name": "dev-123-host",
+        "type": "docker",
+        "host": "10.0.0.22",
+        "user": "root",
+        "port": 22,
+        "keyFile": "~/.ssh/id_ed25519",
+        "dockerPath": "docker",
+        "containers": ["b-detect", "c-iot"]
+      },
+      "services": {
+        "b-detect": { "container": "b-detect" },
+        "c-iot": { "container": "c-iot" },
+        "b-detect-sim": { "container": "b-detect-simulator", "format": "star-mvc" }
+      }
+    },
+    "prod": {
+      "source": {
+        "name": "prod-app",
+        "type": "ssh",
+        "host": "10.0.0.21",
+        "user": "appuser",
+        "port": 22,
+        "keyFile": "~/.ssh/id_ed25519",
+        "allowPaths": ["/opt/apps/**"],
+        "glob": "/opt/apps/**/logs/app*.log*",
+        "tailBytes": 33554432
+      },
+      "services": {
+        "order": { "glob": "/opt/apps/order/logs/app*.log*" },
+        "pay": { "glob": "/opt/apps/pay/logs/app*.log*" }
+      }
+    },
+    "local": {
+      "source": {
+        "name": "local-dev",
+        "type": "file",
+        "roots": ["F:/logs"],
+        "glob": "**/*.log*",
+        "allowPaths": ["**"]
+      },
+      "services": {
+        "demo": { "glob": "demo/**/*.log*" }
+      }
+    }
+  },
+  "traceIdPatterns": [
+    "(?:traceId|trace_id|traceid)[\"']?\\s*[=:]\\s*[\"']?([0-9a-zA-Z_-]{8,64})"
+  ],
+  "noisePatterns": [
+    "(?i)heartbeat",
+    "(?i)定时任务.*完成"
+  ],
+  "redact": {
+    "enabled": true,
+    "patterns": [
+      "(?i)sessionid=\\S+"
+    ]
+  }
+}
